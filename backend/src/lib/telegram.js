@@ -1,6 +1,6 @@
 const TELEGRAM_API = 'https://api.telegram.org'
 
-function telegramEnabled() {
+export function telegramEnabled() {
   return Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_ADMIN_CHAT_ID)
 }
 
@@ -11,7 +11,7 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
 }
 
-async function sendTelegramMessage(text) {
+export async function sendTelegramMessage(text) {
   if (!telegramEnabled()) return
 
   const response = await fetch(`${TELEGRAM_API}/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -26,7 +26,8 @@ async function sendTelegramMessage(text) {
   })
 
   if (!response.ok) {
-    throw new Error(`Telegram notification failed: ${response.status}`)
+    const body = await response.text()
+    throw new Error(`Telegram notification failed: ${response.status} ${body}`)
   }
 }
 

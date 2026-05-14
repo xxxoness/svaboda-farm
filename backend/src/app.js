@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import authRoutes from './routes/auth.js'
+import notificationRoutes from './routes/notifications.js'
 import orderRoutes from './routes/orders.js'
 import supportRoutes from './routes/support.js'
 import { rateLimit } from './middleware/rateLimit.js'
@@ -29,6 +30,7 @@ export function createApp() {
 
   app.get('/api/health', (_req, res) => res.json({ ok: true }))
   app.use('/api/auth', authRoutes)
+  app.use('/api/notifications', notificationRoutes)
   app.use('/api/orders', orderRoutes)
   app.use('/api/support', supportRoutes)
 
