@@ -59,6 +59,21 @@ export const PRODUCTS = {
 
 const positions = ['20% 50%', '42% 48%', '64% 50%', '78% 52%', '35% 38%', '58% 60%']
 const productAssets = ['/assets/farm-catalog.png', '/assets/farm-hero.png', '/assets/farm-storage.png']
+const PRODUCT_PHOTOS = {
+  v1: '/assets/products/potato.png',
+  v2: '/assets/products/carrot.png',
+  v4: '/assets/products/tomatoes.png',
+  v5: '/assets/products/cucumbers.png',
+  g1: '/assets/products/parsley.png',
+  g2: '/assets/products/dill.png',
+  g3: '/assets/products/green-onion.png',
+  g4: '/assets/products/iceberg.png',
+  g5: '/assets/products/arugula.png',
+  g6: '/assets/products/spinach.png',
+  g7: '/assets/products/basil.png',
+  g8: '/assets/products/cilantro.png',
+  s2: '/assets/products/premium-top.png',
+}
 
 const visual = (query, fallback, index = 0) => ({
   img: productAssets[index % productAssets.length],
@@ -110,7 +125,13 @@ const PRODUCT_VISUALS = {
 }
 
 Object.values(PRODUCTS).forEach((items) => {
-  items.forEach((product) => Object.assign(product, PRODUCT_VISUALS[product.id]))
+  items.forEach((product) => {
+    Object.assign(product, PRODUCT_VISUALS[product.id])
+    if (PRODUCT_PHOTOS[product.id]) {
+      product.img = PRODUCT_PHOTOS[product.id]
+      product.imagePosition = 'center'
+    }
+  })
 })
 
 export const TOP_PRODUCT = {
