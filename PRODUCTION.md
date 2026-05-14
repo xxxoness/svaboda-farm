@@ -4,7 +4,7 @@
 
 - Frontend: GitHub Pages.
 - Backend API: Node.js/Express on free backend hosting for MVP, then VPS when traffic becomes real.
-- Database: PostgreSQL through Prisma, preferably Supabase or Neon for the free MVP stage.
+- Database: PostgreSQL, preferably Supabase or Neon for the free MVP stage.
 - Admin notifications: Telegram bot.
 - Payments: disabled at checkout until admin confirms the order.
 
@@ -44,14 +44,15 @@ VITE_API_URL=https://api.example.com/api
 Create `backend/.env` on the server:
 
 ```txt
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/svaboda_farm?schema=public"
-STORE_DRIVER="prisma"
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/postgres"
+STORE_DRIVER="postgres"
 JWT_SECRET="long_random_secret"
 PORT=4000
 FRONTEND_URL="https://your-github-pages-url"
 CORS_ORIGINS="https://your-github-pages-url"
 RATE_LIMIT_WINDOW_MS=60000
 RATE_LIMIT_MAX=180
+PG_POOL_MAX=1
 AUTH_RATE_LIMIT_WINDOW_MS=900000
 AUTH_RATE_LIMIT_MAX=12
 ADMIN_EMAIL="owner@example.com"
@@ -85,21 +86,11 @@ backend
 ```
 
 3. Add environment variables from the backend production env section.
-4. Use the Supabase Transaction Pooler URI as `DATABASE_URL`. For Prisma on serverless, append:
-
-```txt
-?pgbouncer=true&connection_limit=1
-```
-
-Example:
-
-```txt
-postgresql://postgres.project:password@aws-0-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1
-```
+4. Use the Supabase Transaction Pooler URI as `DATABASE_URL`.
 5. Run schema sync once from your local machine or Vercel CLI:
 
 ```bash
-npm --prefix backend run prisma:push
+npm --prefix backend run prisma:generate
 ```
 
 6. Deploy. Your API will be available at:
@@ -140,7 +131,7 @@ VITE_API_URL=https://your-koyeb-app.koyeb.app/api
 ```txt
 Root directory: backend
 Build command: npm ci && npm run prisma:generate
-Start command: npm run prisma:deploy && npm run start
+Start command: npm run start
 ```
 
 3. Add env variables from the backend production env section.

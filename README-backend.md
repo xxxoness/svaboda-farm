@@ -1,6 +1,6 @@
 # Backend Quickstart
 
-The local backend can still work with JSON storage for demo mode. For production, use PostgreSQL through Prisma with `STORE_DRIVER="prisma"`.
+The local backend can still work with JSON storage for demo mode. For production, use PostgreSQL with `STORE_DRIVER="postgres"`.
 
 ## 1) Install backend deps
 
@@ -34,14 +34,13 @@ Use:
 cd backend
 npm ci
 npm run prisma:generate
-npm run prisma:deploy
 npm run start
 ```
 
 Production env must include:
 
 - `DATABASE_URL`
-- `STORE_DRIVER="prisma"`
+- `STORE_DRIVER="postgres"`
 - `JWT_SECRET`
 - `CORS_ORIGINS`
 - `ADMIN_EMAIL`

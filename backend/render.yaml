@@ -5,12 +5,12 @@ services:
     plan: free
     rootDir: backend
     buildCommand: npm ci && npm run prisma:generate
-    startCommand: npm run prisma:deploy && npm run start
+    startCommand: npm run start
     envVars:
       - key: NODE_ENV
         value: production
       - key: STORE_DRIVER
-        value: prisma
+        value: postgres
       - key: RATE_LIMIT_WINDOW_MS
         value: 60000
       - key: RATE_LIMIT_MAX

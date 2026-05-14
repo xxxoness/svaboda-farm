@@ -1,8 +1,14 @@
 import * as jsonStore from './jsonStore.js'
+import * as postgresStore from './postgresStore.js'
 import * as prismaStore from './prismaStore.js'
 
-const productionStore = process.env.STORE_DRIVER === 'prisma'
-const store = productionStore ? prismaStore : jsonStore
+const stores = {
+  json: jsonStore,
+  postgres: postgresStore,
+  prisma: prismaStore,
+}
+
+const store = stores[process.env.STORE_DRIVER] || jsonStore
 
 export const createOrder = store.createOrder
 export const listOrders = store.listOrders
