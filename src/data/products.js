@@ -62,8 +62,18 @@ const productAssets = ['/assets/farm-catalog.png', '/assets/farm-hero.png', '/as
 const PRODUCT_PHOTOS = {
   v1: '/assets/products/potato.png',
   v2: '/assets/products/carrot.png',
+  v3: '/assets/products/beetroot.png',
   v4: '/assets/products/tomatoes.png',
   v5: '/assets/products/cucumbers.png',
+  v6: '/assets/products/cabbage.png',
+  v7: '/assets/products/onion.png',
+  v8: '/assets/products/bell-pepper.png',
+  v9: '/assets/products/zucchini.png',
+  v10: '/assets/products/eggplant.png',
+  v11: '/assets/products/pumpkin.png',
+  v12: '/assets/products/garlic.png',
+  f1: '/assets/products/golden-apples.png',
+  f2: '/assets/products/conference-pears.png',
   g1: '/assets/products/parsley.png',
   g2: '/assets/products/dill.png',
   g3: '/assets/products/green-onion.png',
@@ -72,7 +82,11 @@ const PRODUCT_PHOTOS = {
   g6: '/assets/products/spinach.png',
   g7: '/assets/products/basil.png',
   g8: '/assets/products/cilantro.png',
+  s1: '/assets/products/weekly-set.png',
   s2: '/assets/products/premium-top.png',
+  s3: '/assets/products/grill-set.png',
+  s4: '/assets/products/autumn-set.png',
+  s6: '/assets/products/chef-set.png',
 }
 
 const visual = (query, fallback, index = 0) => ({
