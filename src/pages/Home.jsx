@@ -121,10 +121,12 @@ export default function Home() {
       await createSupportRequest({
         name: 'Подписчик рассылки',
         phone: value,
-        topic: 'Скидка 15% на первый заказ',
-        message: `Клиент оставил email для скидки 15%: ${value}`,
+        topic: selectedPlan ? `Подписка: ${selectedPlan.name}` : 'Скидка 15% на первый заказ',
+        message: selectedPlan
+          ? `Клиент выбрал тариф "${selectedPlan.name}" и оставил контакт: ${value}. Нужно обсудить состав, частоту поставок и оплату.`
+          : `Клиент оставил email для скидки 15%: ${value}`,
       })
-      setSubscriptionStatus('Готово. Скидка 15% закреплена, оператор увидит заявку и свяжется с вами.')
+      setSubscriptionStatus(selectedPlan ? 'Готово. Заявка на подписку ушла оператору, он свяжется и согласует условия.' : 'Готово. Скидка 15% закреплена, оператор увидит заявку и свяжется с вами.')
     } catch {
       setSubscriptionStatus('Не удалось отправить заявку. Попробуйте еще раз или напишите в поддержку.')
     }
@@ -338,12 +340,26 @@ export default function Home() {
           </div>
           {selectedPlan && (
             <AnimatedSection className="mt-8">
-              <div className="rounded-3xl border border-amber-500/25 bg-amber-500/10 p-6">
-                <h3 className="text-2xl font-black">Вы выбрали тариф “{selectedPlan.name}”</h3>
-                <p className="theme-muted mt-2 text-white/60">Оставьте email ниже или перейдите в поддержку: оператор уточнит состав набора, частоту поставок и условия оплаты после подтверждения.</p>
-                <Link to="/support" className="mt-4 inline-flex rounded-2xl border border-amber-500/30 bg-amber-500/15 px-5 py-3 text-sm font-semibold text-amber-200">
-                  Обсудить подписку с оператором
-                </Link>
+              <div className="rounded-3xl border border-amber-500/25 bg-amber-500/10 p-6 md:grid md:grid-cols-[1fr_24rem] md:gap-6 md:items-end">
+                <div>
+                  <h3 className="text-2xl font-black">Вы выбрали тариф “{selectedPlan.name}”</h3>
+                  <p className="theme-muted mt-2 text-white/60">Оставьте email или телефон: оператор увидит выбранный тариф, уточнит состав набора, частоту поставок и условия оплаты после подтверждения.</p>
+                  <Link to="/support" className="mt-4 inline-flex rounded-2xl border border-amber-500/30 bg-amber-500/15 px-5 py-3 text-sm font-semibold text-amber-200">
+                    Обсудить подписку в чате
+                  </Link>
+                </div>
+                <form onSubmit={submitSubscription} className="mt-5 flex flex-col gap-3 md:mt-0">
+                  <input
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="email или телефон"
+                    className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-amber-500/40"
+                  />
+                  <button className="rounded-2xl bg-gradient-to-r from-amber-500 to-lime-600 px-5 py-3 font-semibold text-white hover:scale-[1.02] transition">
+                    Отправить заявку
+                  </button>
+                </form>
               </div>
             </AnimatedSection>
           )}
