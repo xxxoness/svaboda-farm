@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { ImageOff } from 'lucide-react'
 
+function assetUrl(src) {
+  if (!src || src.startsWith('http') || src.startsWith('data:')) return src
+  const base = import.meta.env.BASE_URL || '/'
+  return `${base.replace(/\/$/, '')}/${src.replace(/^\//, '')}`
+}
+
 export default function ProductImage({ product, className = '', imgClassName = '', showFallbackLabel = true, children }) {
   const [failed, setFailed] = useState(false)
   const fallback = product?.fallback || 'from-emerald-700 via-lime-700 to-amber-600'
@@ -9,7 +15,7 @@ export default function ProductImage({ product, className = '', imgClassName = '
     <div className={`relative overflow-hidden bg-gradient-to-br ${fallback} ${className}`}>
       {product?.img && !failed && (
         <img
-          src={product.img}
+          src={assetUrl(product.img)}
           alt={product.name}
           loading="lazy"
           referrerPolicy="no-referrer"

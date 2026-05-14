@@ -5,6 +5,13 @@ import AnimatedSection from '../components/AnimatedSection'
 import ProductImage from '../components/ProductImage'
 import { BRAND, PLANS } from '../data/constants'
 import { TOP_PRODUCT } from '../data/products'
+import { createSupportRequest } from '../services/api'
+
+const assetUrl = (src) => {
+  if (!src || src.startsWith('http') || src.startsWith('data:')) return src
+  const base = import.meta.env.BASE_URL || '/'
+  return `${base.replace(/\/$/, '')}/${src.replace(/^\//, '')}`
+}
 
 const AnimatedCounter = ({ end, suffix = '', duration = 2000 }) => {
   const ref = useRef(null)
@@ -61,6 +68,22 @@ const testimonials = [
   { name: 'Анна П.', role: 'Шеф-повар', text: 'Качество стабильно высокое. Для ресторана — находка.', rating: 5, initials: 'АП', color: 'from-amber-500 to-lime-600' },
   { name: 'Михаил К.', role: 'Предприниматель', text: 'Подписка сэкономила время. Всё свежее и вовремя.', rating: 5, initials: 'МК', color: 'from-lime-500 to-amber-600' },
   { name: 'Елена С.', role: 'Мама троих', text: 'Дети едят овощи с удовольствием. Рекомендую!', rating: 5, initials: 'ЕС', color: 'from-amber-600 to-lime-500' },
+  { name: 'Игорь Л.', role: 'Владелец кафе', text: 'Привозят аккуратно, без хаоса в позициях. Можно планировать меню.', rating: 5, initials: 'ИЛ', color: 'from-emerald-500 to-amber-500' },
+  { name: 'Виктория М.', role: 'HR-директор', text: 'Берем фрукты в офис. Люди реально замечают качество и упаковку.', rating: 5, initials: 'ВМ', color: 'from-sky-500 to-lime-500' },
+  { name: 'Дмитрий Р.', role: 'Повар', text: 'Зелень приезжает живой, без мокрых пакетов и сюрпризов.', rating: 5, initials: 'ДР', color: 'from-lime-600 to-emerald-500' },
+  { name: 'Ольга Н.', role: 'Семейные заказы', text: 'Собрали набор под детей и супы. Очень удобно, что звонят до оплаты.', rating: 5, initials: 'ОН', color: 'from-rose-500 to-amber-500' },
+  { name: 'Сергей А.', role: 'Ресторан', text: 'Понравилось, что можно согласовать замену заранее, а не после доставки.', rating: 5, initials: 'СА', color: 'from-violet-500 to-amber-500' },
+  { name: 'Марина Б.', role: 'Домашняя кухня', text: 'Овощи выглядят как с хорошего рынка, только без очередей.', rating: 5, initials: 'МБ', color: 'from-amber-500 to-orange-500' },
+  { name: 'Павел Т.', role: 'Офис-менеджер', text: 'Регулярная поставка фруктов закрыла маленькую, но вечную боль офиса.', rating: 5, initials: 'ПТ', color: 'from-blue-500 to-lime-500' },
+  { name: 'Наталья К.', role: 'Кондитер', text: 'Ягоды и фрукты приходят в хорошем виде, не нужно списывать половину.', rating: 5, initials: 'НК', color: 'from-pink-500 to-amber-500' },
+  { name: 'Андрей Ф.', role: 'Гриль-бар', text: 'Гриль-набор зашел отлично: перец, кабачки и баклажаны ровные.', rating: 5, initials: 'АФ', color: 'from-orange-600 to-lime-600' },
+  { name: 'Татьяна Г.', role: 'Мама двоих', text: 'Нравится, что можно оставить комментарий и тебя слышат.', rating: 5, initials: 'ТГ', color: 'from-lime-500 to-teal-500' },
+  { name: 'Руслан В.', role: 'HoReCa', text: 'Для тестового периода сервис выглядит зрелее многих поставщиков.', rating: 5, initials: 'РВ', color: 'from-stone-500 to-amber-500' },
+  { name: 'Кирилл З.', role: 'Предприниматель', text: 'Заказал набор в подарок родителям. Упаковка и состав выглядели достойно.', rating: 5, initials: 'КЗ', color: 'from-amber-600 to-emerald-600' },
+  { name: 'Дарья Е.', role: 'ЗОЖ-рацион', text: 'Подписка удобная: меньше решений каждую неделю, больше свежих продуктов дома.', rating: 5, initials: 'ДЕ', color: 'from-emerald-500 to-lime-500' },
+  { name: 'Влад С.', role: 'Шеф', text: 'Самое ценное — подтверждение наличия до оплаты. Это профессионально.', rating: 5, initials: 'ВС', color: 'from-red-500 to-amber-500' },
+  { name: 'Юлия А.', role: 'Семья', text: 'После обычных доставок приятно видеть нормальную сборку и понятный контакт.', rating: 5, initials: 'ЮА', color: 'from-cyan-500 to-lime-500' },
+  { name: 'Роман И.', role: 'Кофейня', text: 'Фрукты для витрины приезжают аккуратные, без ощущения случайного закупа.', rating: 5, initials: 'РИ', color: 'from-purple-500 to-amber-500' },
 ]
 
 const faqs = [
@@ -84,6 +107,28 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState(null)
   const [email, setEmail] = useState('')
   const [selectedPlan, setSelectedPlan] = useState(null)
+  const [subscriptionStatus, setSubscriptionStatus] = useState('')
+
+  const submitSubscription = async (e) => {
+    e.preventDefault()
+    const value = email.trim()
+    if (!value) {
+      setSubscriptionStatus('Введите email, и мы закрепим скидку за вашей заявкой.')
+      return
+    }
+    setSubscriptionStatus('Отправляем заявку...')
+    try {
+      await createSupportRequest({
+        name: 'Подписчик рассылки',
+        phone: value,
+        topic: 'Скидка 15% на первый заказ',
+        message: `Клиент оставил email для скидки 15%: ${value}`,
+      })
+      setSubscriptionStatus('Готово. Скидка 15% закреплена, оператор увидит заявку и свяжется с вами.')
+    } catch {
+      setSubscriptionStatus('Не удалось отправить заявку. Попробуйте еще раз или напишите в поддержку.')
+    }
+  }
 
   return (
     <>
@@ -164,7 +209,7 @@ export default function Home() {
               <AnimatedSection key={item.title} delay={index * 80}>
                 <div className="theme-card h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.055]">
                   <div className="relative h-56 overflow-hidden">
-                    <img src={item.image} alt={item.title} className="h-full w-full object-cover transition duration-700 hover:scale-105" />
+                    <img src={assetUrl(item.image)} alt={item.title} className="h-full w-full object-cover transition duration-700 hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                   <div className="p-6">
@@ -296,6 +341,9 @@ export default function Home() {
               <div className="rounded-3xl border border-amber-500/25 bg-amber-500/10 p-6">
                 <h3 className="text-2xl font-black">Вы выбрали тариф “{selectedPlan.name}”</h3>
                 <p className="theme-muted mt-2 text-white/60">Оставьте email ниже или перейдите в поддержку: оператор уточнит состав набора, частоту поставок и условия оплаты после подтверждения.</p>
+                <Link to="/support" className="mt-4 inline-flex rounded-2xl border border-amber-500/30 bg-amber-500/15 px-5 py-3 text-sm font-semibold text-amber-200">
+                  Обсудить подписку с оператором
+                </Link>
               </div>
             </AnimatedSection>
           )}
@@ -331,10 +379,15 @@ export default function Home() {
             <div className="rounded-3xl overflow-hidden bg-gradient-to-r from-amber-600 via-amber-500 to-lime-500 p-10 text-center">
               <h2 className="text-2xl font-bold text-white">Скидка 15% на первый заказ</h2>
               <p className="mt-2 text-white/90">Подпишитесь на рассылку</p>
-              <form onSubmit={(e) => e.preventDefault()} className="mt-6 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <form onSubmit={submitSubscription} className="mt-6 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@example.by" className="flex-1 px-4 py-3 rounded-xl bg-white/20 border border-white/30 placeholder:text-white/70 focus:outline-none" />
                 <button type="submit" className="px-6 py-3 rounded-xl bg-white text-amber-600 font-semibold hover:scale-105 transition-all">Подписаться</button>
               </form>
+              {subscriptionStatus && (
+                <p className="mt-4 rounded-2xl bg-white/20 px-4 py-3 text-sm text-white">
+                  {subscriptionStatus}
+                </p>
+              )}
             </div>
           </AnimatedSection>
         </div>
