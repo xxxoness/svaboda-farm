@@ -58,9 +58,10 @@ export const PRODUCTS = {
 }
 
 const positions = ['20% 50%', '42% 48%', '64% 50%', '78% 52%', '35% 38%', '58% 60%']
+const productAssets = ['/assets/farm-catalog.png', '/assets/farm-hero.png', '/assets/farm-storage.png']
 
 const visual = (query, fallback, index = 0) => ({
-  img: '/assets/farm-catalog.png',
+  img: productAssets[index % productAssets.length],
   fallback,
   imagePosition: positions[index % positions.length],
 })
