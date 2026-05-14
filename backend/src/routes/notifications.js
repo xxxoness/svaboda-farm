@@ -16,8 +16,15 @@ router.post('/telegram/test', requireAuth, requireRole('ADMIN'), async (_req, re
   if (!telegramEnabled()) {
     return res.status(400).json({ message: 'Telegram is not configured' })
   }
-  await sendTelegramMessage('Тестовое уведомление Свобода Ферма')
-  return res.json({ ok: true })
+  try {
+    await sendTelegramMessage('Тестовое уведомление Свобода Ферма')
+    return res.json({ ok: true })
+  } catch (error) {
+    return res.status(502).json({
+      message: 'Telegram test failed',
+      error: error.message,
+    })
+  }
 })
 
 export default router
