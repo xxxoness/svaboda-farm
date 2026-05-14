@@ -14,16 +14,20 @@ function escapeHtml(value) {
 export async function sendTelegramMessage(text) {
   if (!telegramEnabled()) return
 
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), Number(process.env.TELEGRAM_TIMEOUT_MS || 5_000))
+
   const response = await fetch(`${TELEGRAM_API}/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    signal: controller.signal,
     body: JSON.stringify({
       chat_id: process.env.TELEGRAM_ADMIN_CHAT_ID,
       text,
       parse_mode: 'HTML',
       disable_web_page_preview: true,
     }),
-  })
+  }).finally(() => clearTimeout(timeout))
 
   if (!response.ok) {
     const body = await response.text()
