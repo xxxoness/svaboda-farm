@@ -1,3 +1,5 @@
+import https from 'node:https'
+
 const TELEGRAM_API = 'https://api.telegram.org'
 
 export function telegramEnabled() {
@@ -14,25 +16,45 @@ function escapeHtml(value) {
 export async function sendTelegramMessage(text) {
   if (!telegramEnabled()) return
 
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), Number(process.env.TELEGRAM_TIMEOUT_MS || 5_000))
+  const payload = JSON.stringify({
+    chat_id: process.env.TELEGRAM_ADMIN_CHAT_ID,
+    text,
+    parse_mode: 'HTML',
+    disable_web_page_preview: true,
+  })
+  const url = new URL(`${TELEGRAM_API}/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`)
+  const timeoutMs = Number(process.env.TELEGRAM_TIMEOUT_MS || 5_000)
 
-  const response = await fetch(`${TELEGRAM_API}/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    signal: controller.signal,
-    body: JSON.stringify({
-      chat_id: process.env.TELEGRAM_ADMIN_CHAT_ID,
-      text,
-      parse_mode: 'HTML',
-      disable_web_page_preview: true,
-    }),
-  }).finally(() => clearTimeout(timeout))
+  await new Promise((resolve, reject) => {
+    const request = https.request(
+      url,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payload),
+        },
+      },
+      (response) => {
+        let body = ''
+        response.setEncoding('utf8')
+        response.on('data', (chunk) => {
+          body += chunk
+        })
+        response.on('end', () => {
+          if (response.statusCode >= 200 && response.statusCode < 300) return resolve()
+          return reject(new Error(`Telegram notification failed: ${response.statusCode} ${body}`))
+        })
+      },
+    )
 
-  if (!response.ok) {
-    const body = await response.text()
-    throw new Error(`Telegram notification failed: ${response.status} ${body}`)
-  }
+    request.setTimeout(timeoutMs, () => {
+      request.destroy(new Error(`Telegram notification timeout after ${timeoutMs}ms`))
+    })
+    request.on('error', reject)
+    request.write(payload)
+    request.end()
+  })
 }
 
 export async function notifyNewOrder(order) {
