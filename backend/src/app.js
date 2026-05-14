@@ -36,6 +36,8 @@ export function createApp() {
     if (err.message === 'Not allowed by CORS') {
       return res.status(403).json({ message: 'Origin is not allowed' })
     }
+    // eslint-disable-next-line no-console
+    console.error(err)
     return res.status(500).json({ message: 'Internal server error' })
   })
 

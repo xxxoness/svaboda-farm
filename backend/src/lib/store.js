@@ -5,7 +5,9 @@ import * as prismaStore from './prismaStore.js'
 const stores = {
   json: jsonStore,
   postgres: postgresStore,
-  prisma: prismaStore,
+  // Keep the old env value compatible, but use the lighter driver on serverless.
+  prisma: postgresStore,
+  prismaRuntime: prismaStore,
 }
 
 const store = stores[process.env.STORE_DRIVER] || jsonStore

@@ -7,6 +7,8 @@ const pool = new Pool({
   max: Number(process.env.PG_POOL_MAX || 1),
   idleTimeoutMillis: 10_000,
   connectionTimeoutMillis: 8_000,
+  query_timeout: 8_000,
+  statement_timeout: 8_000,
   ssl: process.env.DATABASE_URL?.includes('supabase.com') ? { rejectUnauthorized: false } : undefined,
 })
 
@@ -15,6 +17,8 @@ let schemaReady
 async function ensureSchema() {
   if (!schemaReady) {
     schemaReady = pool.query(`
+      create extension if not exists pgcrypto;
+
       create table if not exists orders (
         id text primary key default gen_random_uuid()::text,
         customer_name text not null,
