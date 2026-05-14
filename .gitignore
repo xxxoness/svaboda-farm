@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vite/
+.cursor/
+SAIT/
+.env
+backend/.env
+backend/node_modules/
+backend/.env.local
+backend/data/
+backend/prisma/dev.db*
+*.log

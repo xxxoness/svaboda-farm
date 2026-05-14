@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Свобода Ферма</title>
+    <script>
+      var path = location.pathname.replace(/^\//, '')
+      var repo = path.split('/')[0]
+      var target = location.origin + '/' + repo + '/#/' + path.split('/').slice(1).join('/')
+      location.replace(target + location.search)
+    </script>
+  </head>
+  <body></body>
+</html>

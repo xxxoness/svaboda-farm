@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root[data-theme="light"] body {
+  background: #f7f3ea;
+  color: #1c1912;
+}
+
+:root[data-theme="light"] .theme-surface {
+  background: #f7f3ea;
+  color: #1c1912;
+}
+
+:root[data-theme="light"] .theme-main {
+  background: linear-gradient(180deg, #f7f3ea 0%, #fffaf0 45%, #f4eadb 100%);
+}
+
+:root[data-theme="light"] .theme-card {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(68, 52, 25, 0.12);
+}
+
+:root[data-theme="light"] .theme-muted {
+  color: rgba(28, 25, 18, 0.62);
+}
+
+:root[data-theme="light"] .theme-strong {
+  color: #1c1912;
+}
+
+:root[data-theme="light"] .theme-nav {
+  background: rgba(247, 243, 234, 0.88);
+  border-color: rgba(68, 52, 25, 0.12);
+  color: #1c1912;
+}
+
+:root[data-theme="light"] .theme-footer {
+  background: #efe3cf;
+  border-color: rgba(68, 52, 25, 0.12);
+}
+
+:root[data-theme="light"] .text-white,
+:root[data-theme="light"] .text-white\/90,
+:root[data-theme="light"] .text-white\/80,
+:root[data-theme="light"] .text-white\/75,
+:root[data-theme="light"] .text-white\/70 {
+  color: #1c1912 !important;
+}
+
+:root[data-theme="light"] .text-white\/65,
+:root[data-theme="light"] .text-white\/60,
+:root[data-theme="light"] .text-white\/58,
+:root[data-theme="light"] .text-white\/55,
+:root[data-theme="light"] .text-white\/50,
+:root[data-theme="light"] .text-white\/45,
+:root[data-theme="light"] .text-white\/40 {
+  color: rgba(28, 25, 18, 0.64) !important;
+}
+
+:root[data-theme="light"] .bg-white\/5,
+:root[data-theme="light"] .bg-white\/\[0\.045\],
+:root[data-theme="light"] .bg-white\/\[0\.055\],
+:root[data-theme="light"] .bg-white\/\[0\.06\] {
+  background-color: rgba(255, 255, 255, 0.74) !important;
+}
+
+:root[data-theme="light"] .border-white\/10,
+:root[data-theme="light"] .border-white\/15,
+:root[data-theme="light"] .border-white\/20 {
+  border-color: rgba(68, 52, 25, 0.14) !important;
+}
+
+:root[data-theme="light"] .bg-\[\#07070c\],
+:root[data-theme="light"] .bg-\[\#050508\],
+:root[data-theme="light"] .bg-\[\#0a0a10\] {
+  background-color: #f7f3ea !important;
+}
+
+.premium-marquee {
+  animation: premium-marquee 24s linear infinite;
+}
+
+:root[data-theme="light"] .on-photo .text-white,
+:root[data-theme="light"] .on-photo .text-white\/90,
+:root[data-theme="light"] .on-photo .text-white\/80,
+:root[data-theme="light"] .on-photo .text-white\/70,
+:root[data-theme="light"] .on-photo .text-white\/60,
+:root[data-theme="light"] .on-photo .text-white\/55 {
+  color: #fffaf0 !important;
+}
+
+:root[data-theme="light"] .on-photo .theme-muted {
+  color: rgba(255, 250, 240, 0.76) !important;
+}
+
+@keyframes premium-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

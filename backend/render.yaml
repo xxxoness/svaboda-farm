@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: svaboda-farm-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci && npm run prisma:generate
+    startCommand: npm run prisma:deploy && npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STORE_DRIVER
+        value: prisma
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 60000
+      - key: RATE_LIMIT_MAX
+        value: 180
+      - key: AUTH_RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: AUTH_RATE_LIMIT_MAX
+        value: 12
