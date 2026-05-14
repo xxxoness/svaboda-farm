@@ -85,7 +85,17 @@ backend
 ```
 
 3. Add environment variables from the backend production env section.
-4. Use the Supabase PostgreSQL connection string as `DATABASE_URL`.
+4. Use the Supabase Transaction Pooler URI as `DATABASE_URL`. For Prisma on serverless, append:
+
+```txt
+?pgbouncer=true&connection_limit=1
+```
+
+Example:
+
+```txt
+postgresql://postgres.project:password@aws-0-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1
+```
 5. Run schema sync once from your local machine or Vercel CLI:
 
 ```bash
