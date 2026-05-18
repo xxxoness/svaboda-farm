@@ -7,7 +7,7 @@ function assetUrl(src) {
   return `${base.replace(/\/$/, '')}/${src.replace(/^\//, '')}`
 }
 
-export default function ProductImage({ product, className = '', imgClassName = '', showFallbackLabel = true, children }) {
+export default function ProductImage({ product, className = '', imgClassName = '', showFallbackLabel = true, loading = 'lazy', children }) {
   const [failed, setFailed] = useState(false)
   const fallback = product?.fallback || 'from-emerald-700 via-lime-700 to-amber-600'
 
@@ -17,7 +17,7 @@ export default function ProductImage({ product, className = '', imgClassName = '
         <img
           src={assetUrl(product.img)}
           alt={product.name}
-          loading="lazy"
+          loading={loading}
           referrerPolicy="no-referrer"
           onError={() => setFailed(true)}
           style={{ objectPosition: product?.imagePosition || 'center' }}

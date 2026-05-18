@@ -95,12 +95,19 @@ const faqs = [
 ]
 
 const editorial = [
-  { title: 'Урожай под задачу', text: 'Для дома, офиса, ресторана или события. Наборы можно собрать по сезону, бюджету и вкусу.', image: '/assets/farm-catalog.png' },
-  { title: 'Сначала подтверждение', text: 'Администратор проверяет наличие, согласует доставку и только потом отправляет способ оплаты.', image: '/assets/farm-storage.png' },
-  { title: 'Премиальная комплектация', text: 'Чистая упаковка, аккуратные позиции, понятный состав и контроль перед отгрузкой.', image: '/assets/farm-hero.png' },
+  { title: 'Урожай под задачу', text: 'Для дома, офиса, ресторана или события. Наборы можно собрать по сезону, бюджету и вкусу.', image: '/assets/products/weekly-set.jpg' },
+  { title: 'Сначала подтверждение', text: 'Администратор проверяет наличие, согласует доставку и только потом отправляет способ оплаты.', image: '/assets/products/chef-set.jpg' },
+  { title: 'Премиальная комплектация', text: 'Чистая упаковка, аккуратные позиции, понятный состав и контроль перед отгрузкой.', image: '/assets/products/premium-top.jpg' },
 ]
 
-const heroVisual = { name: 'Свежий фермерский заказ', img: '/assets/farm-hero.png', fallback: 'from-amber-900 via-lime-900 to-emerald-950' }
+const heroVisual = { name: 'Свежий фермерский заказ', img: '/assets/products/premium-top.jpg', fallback: 'from-amber-900 via-lime-900 to-emerald-950', imagePosition: 'center' }
+
+const freshShowcase = [
+  { title: 'Овощной ящик', image: '/assets/products/weekly-set.jpg', label: 'дом и семья' },
+  { title: 'Фрукты для офиса', image: '/assets/products/blueberries.jpg', label: 'легкая поставка' },
+  { title: 'Зелень к столу', image: '/assets/products/basil.jpg', label: 'сбор утром' },
+  { title: 'HoReCa набор', image: '/assets/products/chef-set.jpg', label: 'под меню' },
+]
 
 export default function Home() {
   const [billing, setBilling] = useState(false)
@@ -135,7 +142,7 @@ export default function Home() {
   return (
     <>
       <section className="on-photo relative min-h-[calc(100vh-4rem)] flex items-center overflow-hidden">
-        <ProductImage product={heroVisual} showFallbackLabel={false} className="absolute inset-0" imgClassName="scale-105" />
+        <ProductImage product={heroVisual} showFallbackLabel={false} loading="eager" className="absolute inset-0" imgClassName="scale-105" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#07070c_0%,rgba(7,7,12,.88)_38%,rgba(7,7,12,.35)_100%)]" />
         <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-3xl">
@@ -196,6 +203,39 @@ export default function Home() {
               </div>
             </div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="rounded-full border border-lime-500/25 bg-lime-500/10 px-3 py-1 text-sm text-lime-300">Живая витрина</span>
+              <h2 className="mt-4 text-3xl font-black sm:text-4xl">Покупатель должен увидеть вкус до корзины</h2>
+            </div>
+            <p className="theme-muted max-w-md text-white/60">
+              Поэтому на главной показываем не абстрактные обещания, а реальные категории: наборы, зелень, ягоды и ресторанную комплектацию.
+            </p>
+          </AnimatedSection>
+          <div className="grid gap-4 md:grid-cols-4">
+            {freshShowcase.map((item, index) => (
+              <AnimatedSection key={item.title} delay={index * 70}>
+                <div className={`on-photo group theme-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.055] ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}>
+                  <img
+                    src={assetUrl(item.image)}
+                    alt={item.title}
+                    loading="lazy"
+                    className={`h-full min-h-64 w-full object-cover transition duration-700 group-hover:scale-105 ${index === 0 ? 'md:min-h-[33rem]' : ''}`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <span className="rounded-full border border-white/15 bg-black/35 px-3 py-1 text-xs uppercase tracking-[0.18em] text-amber-200 backdrop-blur">{item.label}</span>
+                    <h3 className="mt-3 text-2xl font-black text-white">{item.title}</h3>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
         </div>
       </section>
 

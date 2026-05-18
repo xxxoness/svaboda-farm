@@ -3,7 +3,7 @@ import AnimatedSection from '../components/AnimatedSection'
 import ProductImage from '../components/ProductImage'
 import { WAREHOUSE, BRAND } from '../data/constants'
 
-const storageVisual = { name: 'Хранение и комплектация', img: '/assets/farm-storage.png', fallback: 'from-stone-900 via-emerald-900 to-amber-900' }
+const storageVisual = { name: 'Хранение и комплектация', img: '/assets/products/chef-set.jpg', fallback: 'from-stone-900 via-emerald-900 to-amber-900' }
 
 const stages = [
   { icon: ClipboardCheck, title: 'Приёмка', temp: '15 мин', desc: 'Партия проходит визуальный контроль, взвешивание и отбраковку до попадания на склад.' },

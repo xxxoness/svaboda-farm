@@ -3,7 +3,7 @@ import AnimatedSection from '../components/AnimatedSection'
 import ProductImage from '../components/ProductImage'
 import { BRAND, WAREHOUSE } from '../data/constants'
 
-const companyVisual = { name: 'Команда фермерского магазина', img: '/assets/farm-storage.png', fallback: 'from-amber-900 via-lime-900 to-emerald-950' }
+const companyVisual = { name: 'Команда фермерского магазина', img: '/assets/products/weekly-set.jpg', fallback: 'from-amber-900 via-lime-900 to-emerald-950' }
 
 const values = [
   { icon: Leaf, title: 'Сезонность без обмана', text: 'Мы не обещаем вечный идеальный ассортимент. Показываем то, что реально можем подтвердить и собрать.' },
