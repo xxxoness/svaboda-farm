@@ -92,10 +92,13 @@ const PRODUCT_PHOTOS = {
   g6: '/assets/products/spinach.jpg',
   g7: '/assets/products/basil.jpg',
   g8: '/assets/products/cilantro.jpg',
+  g9: '/assets/products/mint.jpg',
+  g10: '/assets/products/arugula.jpg',
   s1: '/assets/products/weekly-set.jpg',
   s2: '/assets/products/premium-top.jpg',
   s3: '/assets/products/grill-set.jpg',
   s4: '/assets/products/autumn-set.jpg',
+  s5: '/assets/products/vitamin-boost.jpg',
   s6: '/assets/products/chef-set.jpg',
 }
 

@@ -46,7 +46,7 @@ export default function Support() {
                 <MessageCircle className="w-6 h-6 text-lime-300" />
               </div>
               <div>
-                <p className="font-bold">Оператор Свобода Ферма</p>
+                <p className="font-bold">Оператор SVABODA FARM</p>
                 <p className="theme-muted text-sm text-white/50">Ответим и перезвоним для подтверждения</p>
               </div>
             </div>

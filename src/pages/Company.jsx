@@ -3,7 +3,7 @@ import AnimatedSection from '../components/AnimatedSection'
 import ProductImage from '../components/ProductImage'
 import { BRAND, WAREHOUSE } from '../data/constants'
 
-const companyVisual = { name: 'Команда фермерского магазина', img: '/assets/products/weekly-set.jpg', fallback: 'from-amber-900 via-lime-900 to-emerald-950' }
+const companyVisual = { name: 'Ферма SVABODA FARM', img: '/assets/brand/farm-village.jpg', fallback: 'from-amber-900 via-lime-900 to-emerald-950' }
 
 const values = [
   { icon: Leaf, title: 'Сезонность без обмана', text: 'Мы не обещаем вечный идеальный ассортимент. Показываем то, что реально можем подтвердить и собрать.' },
@@ -16,6 +16,12 @@ const timeline = [
   ['2022', 'Собственная логистика и работа с семейными заказами.'],
   ['2025', 'Переход к премиальному сервису наборов и B2B-комплектации.'],
   ['2026', 'MVP онлайн-магазина с админским подтверждением заказов.'],
+]
+
+const brandShots = [
+  { title: 'Ферма и поля', img: '/assets/brand/farm-village.jpg', desc: 'Своя сельская база, теплицы и сезонный урожай рядом с точкой хранения.' },
+  { title: 'Брендированная подача', img: '/assets/brand/branded-box.jpg', desc: 'Коробки и ящики выглядят как продукт, который не стыдно вручить клиенту или партнёру.' },
+  { title: 'Готовый заказ', img: '/assets/brand/ready-order.jpg', desc: 'Сборка не заканчивается корзиной: финальный вид заказа тоже часть сервиса.' },
 ]
 
 export default function Company() {
@@ -68,6 +74,29 @@ export default function Company() {
       </section>
 
       <section className="py-16 bg-white/[0.025]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="mb-10 max-w-3xl">
+            <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-sm text-amber-300">Новый визуальный язык</span>
+            <h2 className="mt-5 text-3xl sm:text-4xl font-black">SVABODA FARM выглядит как сервис, а не как случайная доставка</h2>
+            <p className="theme-muted mt-3 text-white/55">Ребрендинг переносит акцент с “купить овощи” на доверие, упаковку, контроль и спокойную премиальную подачу.</p>
+          </AnimatedSection>
+          <div className="grid gap-5 lg:grid-cols-3">
+            {brandShots.map((shot, index) => (
+              <AnimatedSection key={shot.title} delay={index * 80}>
+                <div className="theme-card h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.055]">
+                  <ProductImage product={shot} showFallbackLabel={false} className="h-72" imgClassName="transition duration-700 hover:scale-105" />
+                  <div className="p-5">
+                    <h3 className="text-xl font-bold">{shot.title}</h3>
+                    <p className="theme-muted mt-2 text-sm leading-relaxed text-white/55">{shot.desc}</p>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="mb-10">
             <h2 className="text-3xl font-black">Как рос проект</h2>

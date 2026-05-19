@@ -3,7 +3,7 @@ import AnimatedSection from '../components/AnimatedSection'
 import ProductImage from '../components/ProductImage'
 import { WAREHOUSE, BRAND } from '../data/constants'
 
-const storageVisual = { name: 'Хранение и комплектация', img: '/assets/products/chef-set.jpg', fallback: 'from-stone-900 via-emerald-900 to-amber-900' }
+const storageVisual = { name: 'Хранение и комплектация SVABODA FARM', img: '/assets/brand/receiving-zone.jpg', fallback: 'from-stone-900 via-emerald-900 to-amber-900' }
 
 const stages = [
   { icon: ClipboardCheck, title: 'Приёмка', temp: '15 мин', desc: 'Партия проходит визуальный контроль, взвешивание и отбраковку до попадания на склад.' },
@@ -24,6 +24,12 @@ const audit = [
   ['02', 'Контроль партии', 'Проверяем внешний вид, свежесть, температуру хранения и пригодность для доставки.'],
   ['03', 'Сборка набора', 'Каждая позиция попадает в упаковку по листу комплектации, а не “на глаз”.'],
   ['04', 'Финальный чек', 'Перед отгрузкой заказ сверяется с заметкой администратора и временем доставки.'],
+]
+
+const processShots = [
+  { title: 'Зона приёмки', img: '/assets/brand/receiving-zone.jpg', desc: 'Взвешивание, первичный контроль и сортировка партий.' },
+  { title: 'Упаковка заказа', img: '/assets/brand/packing-order.jpg', desc: 'Сборочный лист, маркировка и аккуратная эко-упаковка.' },
+  { title: 'Перед доставкой', img: '/assets/brand/delivery-car.jpg', desc: 'Готовые ящики и коробки отправляются клиенту после подтверждения.' },
 ]
 
 export default function Warehouse() {
@@ -82,6 +88,29 @@ export default function Warehouse() {
                   <p className="text-sm text-amber-300">{stage.temp}</p>
                   <h3 className="mt-2 text-xl font-bold">{stage.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-white/55">{stage.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="mb-10 max-w-3xl">
+            <span className="rounded-full border border-lime-500/25 bg-lime-500/10 px-3 py-1 text-sm text-lime-300">Живой процесс</span>
+            <h2 className="mt-5 text-3xl sm:text-4xl font-black">Клиент видит, где его заказ становится заказом</h2>
+            <p className="theme-muted mt-3 text-white/55">Визуально показываем не абстрактный склад, а понятную операцию: приняли, проверили, собрали, подготовили к выдаче.</p>
+          </AnimatedSection>
+          <div className="grid gap-5 lg:grid-cols-3">
+            {processShots.map((shot, index) => (
+              <AnimatedSection key={shot.title} delay={index * 80}>
+                <div className="theme-card h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.055]">
+                  <ProductImage product={shot} showFallbackLabel={false} className="h-64" imgClassName="transition duration-700 hover:scale-105" />
+                  <div className="p-5">
+                    <h3 className="text-xl font-bold">{shot.title}</h3>
+                    <p className="theme-muted mt-2 text-sm leading-relaxed text-white/55">{shot.desc}</p>
+                  </div>
                 </div>
               </AnimatedSection>
             ))}

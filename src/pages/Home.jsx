@@ -95,18 +95,18 @@ const faqs = [
 ]
 
 const editorial = [
-  { title: 'Урожай под задачу', text: 'Для дома, офиса, ресторана или события. Наборы можно собрать по сезону, бюджету и вкусу.', image: '/assets/products/weekly-set.jpg' },
-  { title: 'Сначала подтверждение', text: 'Администратор проверяет наличие, согласует доставку и только потом отправляет способ оплаты.', image: '/assets/products/chef-set.jpg' },
-  { title: 'Премиальная комплектация', text: 'Чистая упаковка, аккуратные позиции, понятный состав и контроль перед отгрузкой.', image: '/assets/products/premium-top.jpg' },
+  { title: 'Урожай под задачу', text: 'Для дома, офиса, ресторана или события. Наборы можно собрать по сезону, бюджету и вкусу.', image: '/assets/brand/branded-box.jpg' },
+  { title: 'Сначала подтверждение', text: 'Администратор проверяет наличие, согласует доставку и только потом отправляет способ оплаты.', image: '/assets/brand/packing-order.jpg' },
+  { title: 'Премиальная комплектация', text: 'Чистая упаковка, аккуратные позиции, понятный состав и контроль перед отгрузкой.', image: '/assets/brand/ready-order.jpg' },
 ]
 
-const heroVisual = { name: 'Свежий фермерский заказ', img: '/assets/products/premium-top.jpg', fallback: 'from-amber-900 via-lime-900 to-emerald-950', imagePosition: 'center' }
+const heroVisual = { name: 'SVABODA FARM премиальная комплектация', img: '/assets/brand/hero-crate.jpg', fallback: 'from-amber-900 via-lime-900 to-emerald-950', imagePosition: 'center' }
 
 const freshShowcase = [
-  { title: 'Овощной ящик', image: '/assets/products/weekly-set.jpg', label: 'дом и семья' },
-  { title: 'Фрукты для офиса', image: '/assets/products/blueberries.jpg', label: 'легкая поставка' },
-  { title: 'Зелень к столу', image: '/assets/products/basil.jpg', label: 'сбор утром' },
-  { title: 'HoReCa набор', image: '/assets/products/chef-set.jpg', label: 'под меню' },
+  { title: 'Подарочная подача', image: '/assets/brand/branded-box.jpg', label: 'брендированный заказ' },
+  { title: 'Складская проверка', image: '/assets/brand/receiving-zone.jpg', label: 'контроль партии' },
+  { title: 'Готово к выдаче', image: '/assets/brand/delivery-car.jpg', label: 'логистика' },
+  { title: 'Ферма в Свабоде', image: '/assets/brand/farm-village.jpg', label: 'собственная база' },
 ]
 
 export default function Home() {
@@ -150,7 +150,7 @@ export default function Home() {
             <Sparkles className="w-4 h-4" /> {BRAND.tagline}
           </span>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.02]">
-            <span className="text-white">Свобода Ферма</span>
+            <span className="text-white">SVABODA FARM</span>
             <br />
             <span className="bg-gradient-to-r from-amber-300 via-lime-300 to-emerald-300 bg-clip-text text-transparent">премиальный урожай к вашей двери</span>
           </h1>
